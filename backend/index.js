@@ -13,6 +13,13 @@ app.use(express.static("public"));
 app.use(cors());
 
 
+var admin = require("firebase-admin");
+var serviceAccount = require("./ticproject-5936a-firebase-adminsdk-5gvit-bbc9ed2a04.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://ticproject-5936a.firebaseio.com"
+});
+
 
 
 
