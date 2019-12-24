@@ -25,14 +25,15 @@ admin.initializeApp({
 var db = admin.database();
 var doctorsTable = db.ref("doctors");
 var patientsTable = db.ref("patients");
+var appointmentsTable = db.ref("appointments");
 
 var counter = 0;
 var totalNumber = 0;
 
-app.get('/addData/:number', function(req, res){
+app.post('/addData/:number', function(req, res){
   totalNumber = totalNumber + parseInt(req.params.number);
 	for (counter; counter < totalNumber; counter++) {
-    var randomIdDoctor = 0 + Math.floor(Math.random()*totalNumber);
+    var randomIdDoctor = counter
     var randomFirstNameDoctor =  faker.name.firstName();
     var randomLastNameDoctor =  faker.name.lastName();
     var randomAgeDoctor = 18 + Math.floor(Math.random() * 50);
@@ -40,7 +41,7 @@ app.get('/addData/:number', function(req, res){
     var randomPhoneNumberDoctor = faker.phone.phoneNumber();
     var randomSpecializationDoctor = faker.lorem.word();
 
-    var doctor = doctorsTable.push({ 
+    doctorsTable.push({ 
       id: randomIdDoctor, 
       first_name: randomFirstNameDoctor,
       last_name: randomLastNameDoctor,
@@ -49,16 +50,15 @@ app.get('/addData/:number', function(req, res){
       phone_number: randomPhoneNumberDoctor,
       specialization: randomSpecializationDoctor
     });
-    console.log(doctor.key); 
 
-    var randomIdPatient = 0 + Math.floor(Math.random()*totalNumber);
+    var randomIdPatient = counter;
     var randomFirstNamePatient =  faker.name.firstName();
     var randomLastNamePatient =  faker.name.lastName();
     var randomAgePatient = 8 + Math.floor(Math.random() * 70);
     var randomEmailPatient = faker.internet.email();
     var randomPhoneNumberPatient = faker.phone.phoneNumber();
 
-    var patient = patientsTable.push({
+    patientsTable.push({
       id: randomIdPatient,
       first_name: randomFirstNamePatient,
       last_name: randomLastNamePatient,
@@ -66,18 +66,48 @@ app.get('/addData/:number', function(req, res){
       email: randomEmailPatient,
       phone_number: randomPhoneNumberPatient,
     })
-    console.log(patient.key); 
-
-    // var appointment = appointmentsTable.push({
-    //   id: randomIdAppointment,
-    // })
+    
+    var randomIdAppointment =  counter;
+    var randomDateAppointment = faker.date.future();
+    console.log(randomDateAppointment)
+    
+    appointmentsTable.push({
+      id: randomIdAppointment,
+      patient_id: randomIdPatient,
+      doctor_id: randomIdDoctor,
+      appointment_date: new Date(randomDateAppointment).getTime()
+    })
   }
   res.send("db filled with data");
-
- 
-
 })
 
+
+app.get("/doctors", function(req, res){
+	doctorsTable.once('value', (snapshot)=>{
+		res.status(200).send(snapshot.val());
+	})
+	.catch(()=>{
+		res.status(500).send();
+	})
+})
+
+app.get("/patients", function(req, res){
+	patientsTable.once('value', (snapshot)=>{
+		res.status(200).send(snapshot.val());
+	})
+	.catch(()=>{
+		res.status(500).send();
+	})
+})
+
+app.get("/appointments", function(req, res){
+	appointmentsTable.once('value', (snapshot)=>{
+		res.status(200).send(snapshot.val());
+	})
+	.catch(()=>{
+		res.status(500).send();
+	})
+})
 
 
 
