@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
     <div class="container">
-      <router-link to="/" class="navbar-brand">Vue Firebase Auth</router-link>
+      <router-link to="/" class="navbar-brand">Med Appointments Tool</router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -19,7 +19,10 @@
           <template v-if="user.loggedIn">
             <div class="nav-item">{{user.data.displayName}}</div>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="signOut">Sign out</a>
+              <a class="nav-link pointer" @click.prevent="signOut">Sign out</a>
+            </li>
+             <li class="nav-item">
+              <router-link to="doctors" class="nav-link">Doctors</router-link>
             </li>
           </template>
           <template v-else>
@@ -59,3 +62,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.pointer{
+  cursor: pointer;
+}
+</style>
