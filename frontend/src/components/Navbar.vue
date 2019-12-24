@@ -17,13 +17,26 @@
         <ul class="navbar-nav mr-auto"></ul>
         <ul class="navbar-nav ml-auto">
           <template v-if="user.loggedIn">
-            <div class="nav-item">{{user.data.displayName}}</div>
+
             <li class="nav-item">
-              <a class="nav-link pointer" @click.prevent="signOut">Sign out</a>
+              <router-link to="appointments" class="nav-link">Appointments</router-link>
             </li>
              <li class="nav-item">
               <router-link to="doctors" class="nav-link">Doctors</router-link>
             </li>
+            <li class="nav-item">
+              <router-link to="patients" class="nav-link">Patients</router-link>
+            </li>
+
+            
+            <li class="nav-item">
+              <a class="nav-link pointer" @click.prevent="signOut">Sign out</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">{{user.data.displayName}}</a>
+            </li>
+
+            
           </template>
           <template v-else>
             <li class="nav-item">
