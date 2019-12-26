@@ -81,7 +81,7 @@ app.post('/addData/:number', function(req, res){
   res.send("db filled with data");
 })
 
-
+//get doctors
 app.get("/doctors", function(req, res){
 	doctorsTable.once('value', (snapshot)=>{
 		res.status(200).send(snapshot.val());
@@ -91,6 +91,7 @@ app.get("/doctors", function(req, res){
 	})
 })
 
+//get patients
 app.get("/patients", function(req, res){
 	patientsTable.once('value', (snapshot)=>{
 		res.status(200).send(snapshot.val());
@@ -100,6 +101,7 @@ app.get("/patients", function(req, res){
 	})
 })
 
+//get appointments
 app.get("/appointments", function(req, res){
 	appointmentsTable.once('value', (snapshot)=>{
 		res.status(200).send(snapshot.val());
@@ -109,6 +111,64 @@ app.get("/appointments", function(req, res){
 	})
 })
 
+//edit doctor by id
+app.put("/doctors/:idDoctor", function(req, res) {
+	var key = req.params.idDoctor; 
+	var data = req.body;
+	admin.database().ref('doctors/' + key).set(data);
+	res.send('The doctor with the id ' + key + ' has been successflly updated.');
+});
+
+//edit patient by id
+app.put("/patients/:idPatient", function(req, res) {
+	var key = req.params.idPatient; 
+	var data = req.body;
+	admin.database().ref('patients/' + key).set(data);
+	res.send('The patient with the id ' + key + ' has been successflly updated.');
+});
+
+//edit appointment by id
+app.put("/appointments/:idAppointment", function(req, res) {
+	var key = req.params.idAppointment; 
+	var data = req.body;
+	admin.database().ref('appointments/' + key).set(data);
+	res.send('The appointment with the id ' + key + ' has been successflly updated.');
+});
+
+//delete doctor by id
+app.delete("/doctors/:idDoctor", function(req, res) {
+	var key = req.params.idDoctor; 
+	doctorsTable.child(key).remove();
+	res.send('The doctor with the id ' + key + ' has been successflly deleted.');
+});
+
+//delete patient by id
+app.delete("/patients/:idPatient", function(req, res) {
+	var key = req.params.idPatient; 
+	patientsTable.child(key).remove(); 
+	res.send('The patient with the id ' + key + ' has been successflly deleted.');
+});
+
+//delete appointment by id
+app.delete("/appointments/:idAppointment", function(req, res) {
+	var key = req.params.idAppointment; 
+	appointmentsTable.child(key).remove(); 
+	res.send('The appointment with the id ' + key + ' has been successflly deleted.');
+});
+
+//add doctor
+app.post("/doctors/add", function(req, res) {
+	var data = req.body;
+	doctorsTable.push(data); 
+	res.send("The doctor has been successfully added.")
+});
+
+//add patient
+app.post("/patients/add", function(req, res) {
+	var data = req.body;
+	patientsTable.push(data); 
+	res.send("The patient has been successfully added.")
+});
 
 
 
