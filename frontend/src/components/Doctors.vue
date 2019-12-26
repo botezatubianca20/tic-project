@@ -22,7 +22,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="doctor in doctors" :key="doctor.id">
+                <tr v-for="(doctor, index) in doctors" :key="doctor.id">
                   <td>{{ doctor.first_name }}</td>
                   <td>{{ doctor.last_name }}</td>
                   <td>{{ doctor.age }}</td>
@@ -30,7 +30,7 @@
                   <td>{{ doctor.email }}</td>
                   <td>{{ doctor.specialization }}</td>
                   <td><router-link :to="{name: 'edit', params: { id: doctor.id }}" class="btn btn-primary">Edit</router-link></td>
-                  <td><button class="btn btn-danger">Delete</button></td>
+                  <td><button class="btn btn-danger" @click="deleteDoctor(index)" >Delete</button></td>
                 </tr>
             </tbody>
         </table>
@@ -49,6 +49,15 @@
       this.axios.get(uri).then(response => {
         this.doctors = response.data;
       });
+    },
+    methods: {
+    deleteDoctor: function(key) {
+      this.axios.delete("http://localhost:3000/doctors/" + key).then(() => {
+           this.axios.get('http://localhost:3000/doctors').then(response => {
+          this.doctors = response.data;
+      });
+        });
+    }
     }
   }
 </script>
