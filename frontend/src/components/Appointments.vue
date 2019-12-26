@@ -22,7 +22,7 @@
                 <tr v-for="appointment in appointments" :key="appointment.id">
                   <td>{{ appointment.doctor_id }}</td>
                   <td>{{ appointment.patient_id }}</td>
-                  <td>{{ appointment.appointment_date }}</td>
+                  <td>{{ new Date(appointment.appointment_date) |  date: 'dd/MM/yyyy' }}</td>
                   <td><router-link :to="{name: 'edit', params: { id: appointment.id }}" class="btn btn-primary">Edit</router-link></td>
                   <td><button class="btn btn-danger">Delete</button></td>
                 </tr>
