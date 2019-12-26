@@ -21,14 +21,14 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="patient in patients" :key="patient.id">
+                <tr v-for="patient in patients" :key="patient.key">
                   <td>{{ patient.first_name }}</td>
                   <td>{{ patient.last_name }}</td>
                   <td>{{ patient.age }}</td>
                   <td>{{ patient.phone_number }}</td>
                   <td>{{ patient.email }}</td>
-                  <td><router-link :to="{name: 'edit', params: { id: patient.id }}" class="btn btn-primary">Edit</router-link></td>
-                  <td><button class="btn btn-danger">Delete</button></td>
+                  <td><router-link :to="{name: 'edit', params: { key: patient.key}}" class="btn btn-primary">Edit</router-link></td>
+                  <td><button class="btn btn-danger" @click="deletePatient(patient['.key'])">Delete</button></td>
                 </tr>
             </tbody>
         </table>
@@ -36,17 +36,26 @@
 </template>
 
 <script>
+
   export default {
       data() {
         return {
           patients: []
         }
       },
-      created() {
-      let uri = 'http://localhost:3000/patients';
-      this.axios.get(uri).then(response => {
+      created: function() {
+      this.axios.get('http://localhost:3000/patients').then(response => {
         this.patients = response.data;
       });
+    },
+    methods: {
+    deletePatient: function(key) {
+      this.axios.delete("http://localhost:3000/patients/" + key).then(() => {
+           this.axios.get('http://localhost:3000/patients').then(response => {
+          this.patients = response.data;
+      });
+        });
+    }
     }
   }
 </script>

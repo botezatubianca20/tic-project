@@ -144,7 +144,9 @@ app.delete("/doctors/:idDoctor", function(req, res) {
 
 //delete patient by id
 app.delete("/patients/:idPatient", function(req, res) {
+	console.log(req.params.idPatient)
 	var key = req.params.idPatient; 
+	console.log(key)
 	patientsTable.child(key).remove(); 
 	res.send('The patient with the id ' + key + ' has been successflly deleted.');
 });
