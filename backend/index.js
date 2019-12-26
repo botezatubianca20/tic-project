@@ -172,6 +172,18 @@ app.post("/patients/add", function(req, res) {
 	res.send("The patient has been successfully added.")
 });
 
+//get patient by id
+app.get("/patients/byKey/:key", function(req, res) {
+	var key = req.params.key; 
+	patientsTable.child(key).once('value').then((snapshot)=>{
+		res.status(200).send(snapshot.val()); 
+	})
+	.catch(()=>{
+		res.status(500).send();
+	})
+});
+
+
 
 
 

@@ -21,14 +21,14 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="patient in patients" :key="patient.key">
+                <tr v-for="(patient, index) in patients" v-bind:key="patient.key">
                   <td>{{ patient.first_name }}</td>
                   <td>{{ patient.last_name }}</td>
                   <td>{{ patient.age }}</td>
                   <td>{{ patient.phone_number }}</td>
                   <td>{{ patient.email }}</td>
-                  <td><router-link :to="{name: 'edit', params: { key: patient.key}}" class="btn btn-primary">Edit</router-link></td>
-                  <td><button class="btn btn-danger" @click="deletePatient(patient['.key'])">Delete</button></td>
+                  <td><router-link :to="{name: 'editPatient', params: { key: patient.key}}" class="btn btn-primary">Edit</router-link></td>
+                  <td><button class="btn btn-danger" @click="deletePatient(index)">Delete</button></td>
                 </tr>
             </tbody>
         </table>
