@@ -45,13 +45,6 @@
           patient: this.$route.params.patient
       }
     },
-    // created () {
-    //   this.axios.get('http://localhost:3000/patients/byKey/' + this.key)
-    //     .then(function(response){
-    //       this.patient = response.data;
-    //     })
-
-    // },
 
     methods: {
       updatePatient: function() {

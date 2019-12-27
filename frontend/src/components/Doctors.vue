@@ -4,7 +4,7 @@
         <div class="row">
           <div class="col-md-10"></div>
           <div class="col-md-2">
-            <router-link :to="{ name: 'create' }" class="btn btn-primary">Add Doctor</router-link>
+            <router-link :to="{ name: 'newDoctor' }" class="btn btn-primary">Add Doctor</router-link>
           </div>
         </div><br />
 
@@ -22,14 +22,14 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="(doctor, index) in doctors" :key="doctor.id">
+                <tr v-for="(doctor, index) in doctors" :key="index">
                   <td>{{ doctor.first_name }}</td>
                   <td>{{ doctor.last_name }}</td>
                   <td>{{ doctor.age }}</td>
                   <td>{{ doctor.phone_number }}</td>
                   <td>{{ doctor.email }}</td>
                   <td>{{ doctor.specialization }}</td>
-                  <td><router-link :to="{name: 'edit', params: { id: doctor.id }}" class="btn btn-primary">Edit</router-link></td>
+                  <td><router-link :to="{name: 'editDoctor', params: { key: index, doctor: doctor }}" class="btn btn-primary">Edit</router-link></td>
                   <td><button class="btn btn-danger" @click="deleteDoctor(index)" >Delete</button></td>
                 </tr>
             </tbody>
@@ -45,8 +45,7 @@
         }
       },
       created() {
-      let uri = 'http://localhost:3000/doctors';
-      this.axios.get(uri).then(response => {
+      this.axios.get('http://localhost:3000/doctors').then(response => {
         this.doctors = response.data;
       });
     },
