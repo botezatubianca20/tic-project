@@ -4,7 +4,7 @@
         <div class="row">
           <div class="col-md-10"></div>
           <div class="col-md-2">
-            <router-link :to="{ name: 'create' }" class="btn btn-primary">Add Appointment</router-link>
+            <router-link :to="{ name: 'newAppointment' }" class="btn btn-primary">Add Appointment</router-link>
           </div>
         </div><br />
 
@@ -19,11 +19,11 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="appointment in appointments" :key="appointment.id">
+                <tr v-for="(appointment, index) in appointments" :key="index">
                   <td>{{ appointment.doctor_id }}</td>
                   <td>{{ appointment.patient_id }}</td>
-                  <td>{{ new Date(appointment.appointment_date) |  date: 'dd/MM/yyyy' }}</td>
-                  <td><router-link :to="{name: 'edit', params: { id: appointment.id }}" class="btn btn-primary">Edit</router-link></td>
+                  <td>{{ new Date(appointment.appointment_date)  }}</td>
+                  <td><router-link :to="{name: 'editAppointment', params: { key: index, appointment: appointment }}" class="btn btn-primary">Edit</router-link></td>
                   <td><button class="btn btn-danger">Delete</button></td>
                 </tr>
             </tbody>

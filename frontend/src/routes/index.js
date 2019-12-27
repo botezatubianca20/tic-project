@@ -10,6 +10,8 @@ import EditPatient from '../components/EditPatient'
 import NewPatient from '../components/NewPatient'
 import EditDoctor from '../components/EditDoctor'
 import NewDoctor from '../components/NewDoctor'
+import EditAppointment from '../components/EditAppointment'
+import NewAppointment from '../components/NewAppointment'
 
 Vue.use(Router)
 
@@ -66,6 +68,16 @@ const router = new Router({
         path:'/newDoctor',
         name:'newDoctor',
         component: NewDoctor,
+      },
+      {
+        path:'/editAppointment',
+        name:'editAppointment',
+        component: EditAppointment,
+      },
+      {
+        path:'/newAppointment',
+        name:'newAppointment',
+        component: NewAppointment,
       }
 ]
 });
