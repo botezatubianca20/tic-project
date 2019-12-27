@@ -6,23 +6,23 @@
 <form  @submit.prevent="updatePatient">
     <div class="form-group">
       <label for="first_name">First name</label>
-      <input type="text" class="form-control" id="first_name" placeholder="First name">
+      <input type="text" class="form-control" id="first_name" placeholder="First name" required>
     </div>
   <div class="form-group">
       <label for="last_name">Last name</label>
-      <input type="text" class="form-control" id="last_name" placeholder="Last name">
+      <input type="text" class="form-control" id="last_name" placeholder="Last name" required>
     </div>
   <div class="form-group">
     <label for="age">Age</label>
-    <input type="text" class="form-control" id="age" placeholder="Age">
+    <input type="text" class="form-control" id="age" placeholder="Age" required>
   </div>
   <div class="form-group">
     <label for="phone_number">Phone number</label>
-    <input type="text" class="form-control" id="phone_number" placeholder="Phone number">
+    <input type="text" class="form-control" id="phone_number" placeholder="Phone number" required>
   </div>
    <div class="form-group">
     <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" placeholder="Email">
+    <input type="email" class="form-control" id="email" placeholder="Email" required>
   </div>
   
   <button type="submit" class="btn btn-info">Submit</button>
