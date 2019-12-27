@@ -7,6 +7,7 @@ import Doctors from '../components/Doctors'
 import Patients from '../components/Patients'
 import Appointments from '../components/Appointments'
 import EditPatient from '../components/EditPatient'
+import NewPatient from '../components/NewPatient'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ const router = new Router({
         path:'/editPatient',
         name:'editPatient',
         component: EditPatient,
+      },
+      {
+        path:'/newPatient',
+        name:'newPatient',
+        component: NewPatient,
       },
 ]
 });

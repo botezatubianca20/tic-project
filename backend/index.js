@@ -144,9 +144,7 @@ app.delete("/doctors/:idDoctor", function(req, res) {
 
 //delete patient by id
 app.delete("/patients/:idPatient", function(req, res) {
-	console.log(req.params.idPatient)
 	var key = req.params.idPatient; 
-	console.log(key)
 	patientsTable.child(key).remove(); 
 	res.send('The patient with the id ' + key + ' has been successflly deleted.');
 });
@@ -176,6 +174,7 @@ app.post("/patients/add", function(req, res) {
 app.get("/patients/byKey/:key", function(req, res) {
 	var key = req.params.key; 
 	patientsTable.child(key).once('value').then((snapshot)=>{
+		console.log(snapshot.val())
 		res.status(200).send(snapshot.val()); 
 	})
 	.catch(()=>{

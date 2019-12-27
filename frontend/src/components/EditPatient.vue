@@ -6,27 +6,27 @@
 <form  @submit.prevent="updatePatient">
     <div class="form-group">
       <label for="first_name">First name</label>
-      <input type="text" class="form-control" id="first_name" placeholder="First name" required>
+      <input type="text" class="form-control" id="first_name" placeholder="First name" required  v-model="patient.first_name">
     </div>
   <div class="form-group">
       <label for="last_name">Last name</label>
-      <input type="text" class="form-control" id="last_name" placeholder="Last name" required>
+      <input type="text" class="form-control" id="last_name" placeholder="Last name" required v-model="patient.last_name">
     </div>
   <div class="form-group">
     <label for="age">Age</label>
-    <input type="text" class="form-control" id="age" placeholder="Age" required>
+    <input type="text" class="form-control" id="age" placeholder="Age" required v-model="patient.age">
   </div>
   <div class="form-group">
     <label for="phone_number">Phone number</label>
-    <input type="text" class="form-control" id="phone_number" placeholder="Phone number" required>
+    <input type="text" class="form-control" id="phone_number" placeholder="Phone number" required v-model="patient.phone_number">
   </div>
    <div class="form-group">
     <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" placeholder="Email" required>
+    <input type="email" class="form-control" id="email" placeholder="Email" required v-model="patient.email">
   </div>
   
   <button type="submit" class="btn btn-info">Submit</button>
-    <router-link to="/" class="btn btn-secondary mx-sm-3">Back</router-link>
+    <router-link to="/patients" class="btn btn-secondary mx-sm-3">Back</router-link>
 </form>
 
 <br>
@@ -41,32 +41,21 @@
     name: 'editPatient',
     data () {
       return {
-         // preluam din componenta anterioara cheia unica din firebase asociata cu actorul
           key: this.$route.params.key,
-          patient: 0
+          patient: this.$route.params.patient
       }
     },
-    created () {
-       // utilizam verbul get pentru a trimite request catre server si a obtine 
-       // un actor pe baza id-ul unui din firebase preluata din componenta anterioara
-      this.axios.get('http://localhost:3000/patients/byKey/' + this.key)
-        .then(function(response){ //daca primim raspuns de la server initializam actorul
-          this.patient = response.body;
-        })
+    // created () {
+    //   this.axios.get('http://localhost:3000/patients/byKey/' + this.key)
+    //     .then(function(response){
+    //       this.patient = response.data;
+    //     })
 
-    },
+    // },
 
     methods: {
-      updatePatient () {
-         // utilizam verbul put pentru a putea trimite date catre server si a face update la actor
-        this.axios.put('http://localhost:3000/patients/' +  this.key, 
-        {
-            first_name: this.patient.first_name,
-            last_name: this.patient.last_name,
-            age: this.patient.age,
-            email: this.patient.email,
-            phone_number: this.patient.phone_number	
-        })
+      updatePatient: function() {
+        this.axios.put('http://localhost:3000/patients/' +  this.key, this.patient)
         .then(function(){ 
             alert("The patient has been updated!");
         })
@@ -75,5 +64,6 @@
           })
       }
     }
+
   }
 </script>
