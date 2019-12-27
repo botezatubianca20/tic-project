@@ -1,41 +1,36 @@
 <template>
   <div id="editPatient">
     <h3>Edit Patient</h3>
-    <div class="row">
-    <form @submit.prevent="updatePatient" class="col s12">
-      <div class="row">
-        <div class="input-field col s12">
-          <input type="text" id="first_name" v-model="patient.first_name" required>
-          <label class="active" for="first_name">First Name</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input type="text" id="last_name" v-model="patient.last_name" required>
-          <label class="active" for="last_name">Last Name</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input type="text" id="age" v-model="patient.age" required>
-          <label class="active" for="age">Age</label>
-        </div>
-      </div>
-     <div class="row">
-        <div class="input-field col s12">
-          <input type="text" id="phone_number" v-model="patient.phone_number" required>
-          <label class="active" for="phone_number">Phone number</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input type="text" id="email" v-model="patient.email" required>
-          <label class="active" for="email">Email</label>
-        </div>
-      </div>
-      <button type="submit" class="btn red darken-4">Submit</button>
-      <router-link to="/" class="btn grey">Back</router-link>
-    </form>
+    <div class="form-group col-md-6">
+
+<form  @submit.prevent="updatePatient">
+    <div class="form-group">
+      <label for="first_name">First name</label>
+      <input type="text" class="form-control" id="first_name" placeholder="First name">
+    </div>
+  <div class="form-group">
+      <label for="last_name">Last name</label>
+      <input type="text" class="form-control" id="last_name" placeholder="Last name">
+    </div>
+  <div class="form-group">
+    <label for="age">Age</label>
+    <input type="text" class="form-control" id="age" placeholder="Age">
+  </div>
+  <div class="form-group">
+    <label for="phone_number">Phone number</label>
+    <input type="text" class="form-control" id="phone_number" placeholder="Phone number">
+  </div>
+   <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" placeholder="Email">
+  </div>
+  
+  <button type="submit" class="btn btn-info">Submit</button>
+    <router-link to="/" class="btn btn-secondary mx-sm-3">Back</router-link>
+</form>
+
+<br>
+
   </div>
   </div>
 </template>
