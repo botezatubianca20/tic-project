@@ -21,6 +21,36 @@ admin.initializeApp({
   databaseURL: "https://ticproject-5936a.firebaseio.com"
 });
 
+	const getAuthToken = (req, res, next) => {
+		if (
+		  req.headers.authorization &&
+		  req.headers.authorization.split(' ')[0] === 'Bearer'
+		) {
+		  req.authToken = req.headers.authorization.split(' ')[1];
+		} else {
+		  req.authToken = null;
+		}
+		next();
+	  };
+	  
+	  
+	   const checkIfAuthenticated = (req, res, next) => {
+	   getAuthToken(req, res, async () => {
+		  try {
+			const { authToken } = req;
+			const userInfo = await admin
+			  .auth()
+			  .verifyIdToken(authToken);
+			req.authId = userInfo.uid;
+			return next();
+		  } catch (e) {
+			return res
+			  .status(401)
+			  .send({ error: 'You are not authorized to make this request' });
+		  }
+		});
+	  };
+
 
 var db = admin.database();
 var doctorsTable = db.ref("doctors");
@@ -78,8 +108,11 @@ app.post('/addData/:number', function(req, res){
   res.send("db filled with data");
 })
 
+
+//DE ADAUGAT checkIfAuthenticated la fiecare ruta
+
 //get doctors
-app.get("/doctors", function(req, res){
+app.get("/doctors",  function(req, res){
 	doctorsTable.once('value', (snapshot)=>{
 		res.status(200).send(snapshot.val());
 	})
@@ -89,7 +122,7 @@ app.get("/doctors", function(req, res){
 })
 
 //get patients
-app.get("/patients", function(req, res){
+app.get("/patients",  function(req, res){
 	patientsTable.once('value', (snapshot)=>{
 		res.status(200).send(snapshot.val());
 	})

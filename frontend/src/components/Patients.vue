@@ -36,7 +36,7 @@
 </template>
 
 <script>
-
+import firebase from 'firebase'
   export default {
       data() {
         return {
@@ -44,7 +44,9 @@
         }
       },
       created: function() {
-      this.axios.get('http://localhost:3000/patients').then(response => {
+        const token =  firebase.auth().currentUser.getIdToken();
+      this.axios.get('http://localhost:3000/patients', {headers:  
+          { authorization: `Bearer ${token}` }}).then(response => {
         this.patients = response.data;
       });
     },
