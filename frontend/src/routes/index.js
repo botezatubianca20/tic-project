@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import firebase from 'firebase'
+
 import Login from '../components/Login'
 import Register from '../components/Register'
 import Dashboard from '../components/Dashboard'
@@ -22,7 +24,10 @@ const router = new Router({
         {
         path: '/login',
         name: 'login',
-        component: Login
+        component: Login,
+        meta: {
+          requiresGuest: true
+        }
     },
     {
         path: '/register',
@@ -37,49 +42,114 @@ const router = new Router({
     {
         path: '/doctors',
         name: 'Doctors',
-        component: Doctors
+        component: Doctors,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/patients',
         name: 'Patients',
-        component: Patients
+        component: Patients,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/appointments',
         name: 'Appointments',
-        component: Appointments
+        component: Appointments,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path:'/editPatient',
         name:'editPatient',
         component: EditPatient,
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path:'/newPatient',
         name:'newPatient',
         component: NewPatient,
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path:'/editDoctor',
         name:'editDoctor',
         component: EditDoctor,
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path:'/newDoctor',
         name:'newDoctor',
         component: NewDoctor,
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path:'/editAppointment',
         name:'editAppointment',
         component: EditAppointment,
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path:'/newAppointment',
         name:'newAppointment',
         component: NewAppointment,
+        meta: {
+          requiresAuth: true
+        }
       }
 ]
 });
+
+// Nav Guard
+router.beforeEach((to, from, next) => {
+  // Check for requiresAuth guard
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    //verifica daca nu exista un utilziator logat
+    if (!firebase.auth().currentUser) {
+      // redirect catre login
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      // merge pe ruta
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+    //verifica daca nu exista un utilziator logat
+    if (firebase.auth().currentUser) {
+      // redirect catre firstPage
+      next({
+        path: '/',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+       // merge pe ruta
+      next();
+    }
+  } else {
+    // merge pe ruta
+    next();
+  }
+});
+
 
 export default router
