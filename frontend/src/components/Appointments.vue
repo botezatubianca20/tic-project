@@ -14,6 +14,7 @@
               <th>Patient</th>
               <th>Doctor</th>
               <th>Date</th>
+              <th>Hour</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>
@@ -23,8 +24,9 @@
                   <td>{{ appointment.patient_id }}</td>
                   <td>{{ appointment.doctor_id }}</td>
                   <td>{{ new Date(appointment.appointment_date)  }}</td>
+                  <td>{{ appointment.hour  }}</td>
                   <td><router-link :to="{name: 'editAppointment', params: { key: index, appointment: appointment }}" class="btn btn-primary">Edit</router-link></td>
-                  <td><button class="btn btn-danger">Delete</button></td>
+                  <td><button class="btn btn-danger" @click="deleteAppointment(index)">Delete</button></td>
                 </tr>
             </tbody>
         </table>
@@ -42,6 +44,15 @@
       this.axios.get('http://localhost:3000/appointments').then(response => {
         this.appointments = response.data;
       });
+    },
+    methods: {
+    deleteAppointment: function(key) {
+      this.axios.delete("http://localhost:3000/appointments/" + key).then(() => {
+           this.axios.get('http://localhost:3000/appointments').then(response => {
+          this.appointments = response.data;
+      });
+        });
+    }
     }
   }
 </script>

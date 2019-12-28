@@ -65,6 +65,7 @@ app.post('/addData/:number', function(req, res){
     })
     
 	var randomDateAppointment = faker.date.future();
+	console.log("randomDateAppointment", randomDateAppointment)
 	var randomHourAppointment = '15:30'
     
     appointmentsTable.push({
@@ -126,6 +127,7 @@ app.put("/patients/:idPatient", function(req, res) {
 app.put("/appointments/:idAppointment", function(req, res) {
 	var key = req.params.idAppointment; 
 	var data = req.body;
+	console.log(data)
 	admin.database().ref('appointments/' + key).set(data);
 	res.send('The appointment with the id ' + key + ' has been successflly updated.');
 });
@@ -168,6 +170,7 @@ app.post("/patients/add", function(req, res) {
 //add appointment
 app.post("/appointments/add", function(req, res) {
 	var data = req.body;
+	console.log(data)
 	appointmentsTable.push(data); 
 	res.send("The appointment has been successfully added.")
 });

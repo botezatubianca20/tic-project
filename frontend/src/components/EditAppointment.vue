@@ -76,13 +76,14 @@ import datePicker from 'vue-bootstrap-datetimepicker';
 
     methods: {
       updateAppointment: function() {
-        this.axios.post('http://localhost:3000/appointments/add', {
-          first_name: this.first_name,
-          last_name: this.last_name,
-          age: this.age,
+        this.axios.put('http://localhost:3000/appointments/' + this.key, {
+            appointment_date: new Date(this.date).getTime(),
+            hour: this.appointment.hour,
+            patient_id: this.appointment.patient_id,
+            doctor_id: this.appointment.doctor_id
         })
         .then(function(){ 
-            alert("The appointment has been added!");
+            alert("The appointment has been updated!");
         })
         .catch(function(error){
             alert(error);

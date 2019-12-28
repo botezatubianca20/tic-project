@@ -76,6 +76,7 @@ import datePicker from 'vue-bootstrap-datetimepicker';
       addAppointment: function() {
         this.axios.post('http://localhost:3000/appointments/add', {
             appointment_date: this.date,
+            hour: this.hour,
             doctor_id: this.selectedDoctor,
             patient_id: this.selectedPatient
         })
