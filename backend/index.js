@@ -127,7 +127,10 @@ app.put("/patients/:idPatient", function(req, res) {
 app.put("/appointments/:idAppointment", function(req, res) {
 	var key = req.params.idAppointment; 
 	var data = req.body;
-	console.log(data)
+	
+	data.appointment_date = new Date(data.appointment_date).getTime();
+	console.log(data)	 
+
 	admin.database().ref('appointments/' + key).set(data);
 	res.send('The appointment with the id ' + key + ' has been successflly updated.');
 });

@@ -58,7 +58,7 @@ import datePicker from 'vue-bootstrap-datetimepicker';
           age: "",
           date: null,
             options: {
-            format: 'DD/MM/YYYY',
+            format: 'MM/DD/YYYY',
              }
       }
     },
