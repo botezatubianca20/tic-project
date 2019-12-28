@@ -41,8 +41,7 @@ app.post('/addData/:number', function(req, res){
     var randomPhoneNumberDoctor = faker.phone.phoneNumber();
     var randomSpecializationDoctor = faker.lorem.word();
 
-    doctorsTable.push({ 
-      id: randomIdDoctor, 
+    var doctor = doctorsTable.push({ 
       first_name: randomFirstNameDoctor,
       last_name: randomLastNameDoctor,
       age: randomAgeDoctor,	
@@ -51,15 +50,13 @@ app.post('/addData/:number', function(req, res){
       specialization: randomSpecializationDoctor
     });
 
-    var randomIdPatient = counter;
     var randomFirstNamePatient =  faker.name.firstName();
     var randomLastNamePatient =  faker.name.lastName();
     var randomAgePatient = 8 + Math.floor(Math.random() * 70);
     var randomEmailPatient = faker.internet.email();
     var randomPhoneNumberPatient = faker.phone.phoneNumber();
 
-    patientsTable.push({
-      id: randomIdPatient,
+    var patient = patientsTable.push({
       first_name: randomFirstNamePatient,
       last_name: randomLastNamePatient,
       age: randomAgePatient,	
@@ -67,15 +64,14 @@ app.post('/addData/:number', function(req, res){
       phone_number: randomPhoneNumberPatient,
     })
     
-    var randomIdAppointment =  counter;
-    var randomDateAppointment = faker.date.future();
-    console.log(randomDateAppointment)
+	var randomDateAppointment = faker.date.future();
+	var randomHourAppointment = '15:30'
     
     appointmentsTable.push({
-      id: randomIdAppointment,
-      patient_id: randomIdPatient,
-      doctor_id: randomIdDoctor,
-      appointment_date: new Date(randomDateAppointment).getTime()
+      patient_id: patient.key,
+      doctor_id: doctor.key,
+	  appointment_date: new Date(randomDateAppointment).getTime(),
+	  hour: randomHourAppointment
     })
   }
   res.send("db filled with data");
@@ -110,7 +106,6 @@ app.get("/appointments", function(req, res){
 		res.status(500).send();
 	})
 })
-
 //edit doctor by id
 app.put("/doctors/:idDoctor", function(req, res) {
 	var key = req.params.idDoctor; 
@@ -170,7 +165,15 @@ app.post("/patients/add", function(req, res) {
 	res.send("The patient has been successfully added.")
 });
 
-//get patient by id
+//add appointment
+app.post("/appointments/add", function(req, res) {
+	var data = req.body;
+	appointmentsTable.push(data); 
+	res.send("The appointment has been successfully added.")
+});
+
+
+//get patient by key
 app.get("/patients/byKey/:key", function(req, res) {
 	var key = req.params.key; 
 	patientsTable.child(key).once('value').then((snapshot)=>{

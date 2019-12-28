@@ -1,6 +1,6 @@
 <template>
   <div id="addDoctor">
-    <h3>Edit Patient</h3>
+    <h3>New Doctor</h3>
     <div class="form-group col-md-6">
 
 <form  @submit.prevent="addDoctor">
