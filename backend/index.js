@@ -164,7 +164,6 @@ app.put("/appointments/:idAppointment", function(req, res) {
 	var data = req.body;
 	
 	data.appointment_date = new Date(data.appointment_date).getTime();
-	console.log(data)	 
 
 	admin.database().ref('appointments/' + key).set(data);
 	res.send('The appointment with the id ' + key + ' has been successflly updated.');
@@ -208,7 +207,6 @@ app.post("/patients/add", function(req, res) {
 //add appointment
 app.post("/appointments/add", function(req, res) {
 	var data = req.body;
-	console.log(data)
 	appointmentsTable.push(data); 
 	res.send("The appointment has been successfully added.")
 });
