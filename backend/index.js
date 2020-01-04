@@ -63,7 +63,6 @@ var totalNumber = 0;
 app.post('/addData/:number', function(req, res){
   totalNumber = totalNumber + parseInt(req.params.number);
 	for (counter; counter < totalNumber; counter++) {
-    var randomIdDoctor = counter
     var randomFirstNameDoctor =  faker.name.firstName();
     var randomLastNameDoctor =  faker.name.lastName();
     var randomAgeDoctor = 18 + Math.floor(Math.random() * 50);
@@ -140,6 +139,9 @@ app.get("/appointments", function(req, res){
 		res.status(500).send();
 	})
 })
+
+
+
 //edit doctor by id
 app.put("/doctors/:idDoctor", function(req, res) {
 	var key = req.params.idDoctor; 
@@ -216,8 +218,20 @@ app.post("/appointments/add", function(req, res) {
 app.get("/patients/byKey/:key", function(req, res) {
 	var key = req.params.key; 
 	patientsTable.child(key).once('value').then((snapshot)=>{
-		console.log(snapshot.val())
-		res.status(200).send(snapshot.val()); 
+		var name = snapshot.val().first_name + ' ' + snapshot.val().last_name;
+		res.status(200).send(name); 
+	})
+	.catch(()=>{
+		res.status(500).send();
+	})
+});
+
+//get doctor by key
+app.get("/doctors/byKey/:key", function(req, res) {
+	var key = req.params.key; 
+	doctorsTable.child(key).once('value').then((snapshot)=>{
+		var name = snapshot.val().first_name + ' ' + snapshot.val().last_name;
+		res.status(200).send(name); 
 	})
 	.catch(()=>{
 		res.status(500).send();
