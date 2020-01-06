@@ -58,7 +58,7 @@
 
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-primary">Register</button>
+                  <button type="submit" class="btn btn-primary" >Register</button>
                 </div>
               </div>
             </form>
@@ -90,6 +90,7 @@ export default {
         .auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.password)
         .then(data => {
+          this.$router.replace({ name: "Dashboard" });
           data.user
             .updateProfile({
               displayName: this.form.name
